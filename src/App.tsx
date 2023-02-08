@@ -5,7 +5,7 @@ import Task from "./interfaces/TaskInterface";
 import TaskForm from "./components/TaskForm";
 
 interface Props {
-	title: string;
+	title?: string;
 }
 
 function App({ title }: Props) {
@@ -24,6 +24,17 @@ function App({ title }: Props) {
 		},
 	]);
 
+	const getCurrentTimespamp = (): number => new Date().getTime();
+
+	const addANewTask = (task: Task) =>
+		setTasks([
+			...tasks,
+			{ ...task, id: getCurrentTimespamp(), completed: false },
+		]);
+
+	const deleteATask = (id: number) =>
+		setTasks(tasks.filter((task) => task.id !== id));
+
 	return (
 		<div className=" bg-slate-700  container mx-auto text-5xl">
 			<nav className="bg-white dark:bg-gray-800  p-5">
@@ -34,8 +45,8 @@ function App({ title }: Props) {
 			</nav>
 
 			<main className="container p-4">
-				<TaskForm />
-				<TaskList tasks={tasks} />
+				<TaskForm addANewTask={addANewTask} />
+				<TaskList tasks={tasks} deleteATask={deleteATask} />
 			</main>
 		</div>
 	);

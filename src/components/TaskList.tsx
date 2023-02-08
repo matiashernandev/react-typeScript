@@ -3,14 +3,17 @@ import TaskCard from "./TaskCard";
 
 interface Props {
 	tasks: Task[];
+	deleteATask: (id: number) => void;
 }
 
-export default function TaskList({ tasks }: Props) {
+export default function TaskList({ tasks, deleteATask }: Props) {
 	return (
-		<div>
+		<>
 			{tasks.map((task) => (
-				<TaskCard task={task} />
+				<div key={task.id}>
+					<TaskCard task={task} deleteATask={deleteATask} />
+				</div>
 			))}
-		</div>
+		</>
 	);
 }
